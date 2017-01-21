@@ -35,11 +35,11 @@
             raj
         </div>
         <div class="right">
-            <img src="img/im2.png" />
+            <canvas id="control" width="900px" height="500px" ></canvas>
         </div>
     </div>
     
-   
+   <div style="clear:both;"></div>
      
 	<div id="results">My image</div>
 	<div id="my_camera"></div>
@@ -51,8 +51,9 @@
     
     <input id="mydata" type="hidden" name="mydata" value=""/>
    
-    <div> 
-        <input id="partbtn" value="Part" type="button">
+    <div> <!--
+        <input id="partbtn" value="Part" type="button"> -->
+        <input id="manibtn" value="Mani" type="button">
       <input id="grayscalebtn" value="Grayscale" type="button">
       <input id="invertbtn" value="Invert" type="button">
         <input id="prog" type="text"  value=""/>
@@ -100,7 +101,7 @@
                      draw(img,j,0);
                  };    
                   
-            },1000);
+            },3500);
 		}
         var __i=0;
         
@@ -118,6 +119,44 @@
               ctx.putImageData(imageData, 0, 0);
               ctx.save();
                
+              var mani = function(){
+                  var arr=[455,292,521,375,385,293,451,374,314,293,380,375,247,292,309,376,176,293,241,376,110,292,171,374,41,292,104,374,462,119,524,119,390,119,456,119,321,119,386,200,251,118,316,199,183,119,247,199,114,118,178,200,46,118,109,200];
+                  var l =14;
+                  var s=[];
+                  var j=0;
+                  //console.log("L = "+arr.length);
+                  for(i=0;i<56;i+=4){
+                      status = part(arr[i+0],arr[i+1],arr[i+2],arr[i+3]);
+                      s[j++]=status;
+                  }
+                  console.log(s);
+                  show(s);
+              };
+              
+              var show = function(s){
+                  var img = new Image();
+                 img.src = "img/car.png";
+                 img.onload = function() {
+                     
+                     var img1 = new Image();
+                     img1.src = "img/im2.png";
+                     img1.onload = function() {
+                          var canvas = document.getElementById('control');
+                          var ctx = canvas.getContext('2d');
+                          ctx.drawImage(img1, 0, 0);
+                         
+                         ctx.drawImage(img, 0, 0);
+                          //img.style.display = 'none';
+                          //var imageData2 = ctx.getImageData(x1,y1,x2, y2);
+                          //var data2 = imageData2.data;
+                          //console.log(data);
+                          //ctx2.putImageData(imageData2, 0, 0);
+                          //ctx2.save();
+                      };
+                 };
+              };
+            
+            
               var part = function(x1,y1,x2,y2) {
                   //console.log(img.src);
                   //console.log(x1+" "+y1+" "+x2+" "+y2);
@@ -146,7 +185,7 @@
                   else
                       status = "No";
                   document.getElementById("shows").innerHTML = status;
-                  
+                  return status;
                   /*
                         s=y1*canvas.width+x1-1;
                         s*=4;
@@ -178,9 +217,10 @@
                 ctx.putImageData(imageData, 0, 0);
                   
               };
-              
-              var partb = document.getElementById('partbtn');
-              partb.addEventListener('click', part(385,293,451,374));
+               var manil = document.getElementById('manibtn');
+              manil.addEventListener('click', mani());
+              //var partb = document.getElementById('partbtn');
+              //partb.addEventListener('click', part(385,293,451,374));
               var invertbtn = document.getElementById('invertbtn');
               invertbtn.addEventListener('click', invert);
               var grayscalebtn = document.getElementById('grayscalebtn');
