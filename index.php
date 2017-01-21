@@ -57,7 +57,7 @@
         <input id="prog" type="text"  value=""/>
     </div>
     
-    <canvas id="canvas" width="300" height="240"></canvas>
+    <canvas id="canvas" width="640" height="480"></canvas>
     
     
     
@@ -67,10 +67,10 @@
    
 	<script language="JavaScript">
 		Webcam.set({
-			width: 20,
+			width: 80,
 			height: 40,
-			dest_width: 300,
-			dest_height: 240,
+			dest_width: 640,
+			dest_height: 480,
 			image_format: 'jpeg',
 			jpeg_quality: 100
 		});
