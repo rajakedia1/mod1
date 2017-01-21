@@ -48,7 +48,7 @@ header nav ul li{
     display: block;
     max-width: calc(100% - 200px);
 }
-.wrapper .right img{
-    width: 100%;
-    height: auto;
+.wrapper .right canvas{
+    width: 800;
+    height: 460;
 }
