@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    color: black;
+}
+header{
+    height: 50px;
+    background-color: black;
+}
+header a{
+    color: white;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+header a:hover{
+    text-decoration: underline;
+}
+header nav{
+    font-weight: 100;
+    float: right;
+}
+header nav ul{
+    display: inline-block;
+}
+header nav ul li{
+    float:left;
+    display: block;
+    padding: 0 10px;
+}
+.wrapper{
+    width: 100%;
+    display: block;
+    float: left;
+    margin: 0;
+}
+.wrapper .left{
+    width: 200px;
+    float: left;
+    display: block;
+    height: 500px;
+}
+.wrapper .right{
+    width: calc(100% - 200px);
+    width: calc(100% - 200px);
+    float: left;
+    display: block;
+    max-width: calc(100% - 200px);
+}
+.wrapper .right img{
+    width: 100%;
+    height: auto;
+}
