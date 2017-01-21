@@ -59,7 +59,7 @@
     </div>
     
     <canvas id="canvas" width="640" height="480"></canvas>
-    <canvas id="canvas2" width="64" height="80"></canvas>
+    <canvas id="canvas2" width="64px" height="80px"></canvas>
     <div id="shows"> </div>
     
     
@@ -120,14 +120,14 @@
                
               var part = function(x1,y1,x2,y2) {
                   //console.log(img.src);
-                  console.log(x1+" "+y1+" "+x2+" "+y2);
+                  //console.log(x1+" "+y1+" "+x2+" "+y2);
                   var canvas2 = document.getElementById('canvas2');
                   var ctx2 = canvas2.getContext('2d');
                   //ctx2.drawImage(img, 0, 0);
                   //img.style.display = 'none';
                   var imageData2 = ctx.getImageData(x1,y1,x2, y2);
                   var data2 = imageData2.data;
-
+                  //console.log(data);
                   ctx2.putImageData(imageData2, 0, 0);
                   ctx2.save();
                   var count = 0;
@@ -139,9 +139,9 @@
                       
                     }
                   console.log(count);
-                  console.log(data2.length/4);
+                  //console.log(data2.length/4);
                   var status = "No";
-                  if((count/5120)>0.2)
+                  if((count/12000)>0.2)
                       status = "Yes";
                   else
                       status = "No";
