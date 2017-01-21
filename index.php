@@ -52,13 +52,15 @@
     <input id="mydata" type="hidden" name="mydata" value=""/>
    
     <div> 
+        <input id="partbtn" value="Part" type="button">
       <input id="grayscalebtn" value="Grayscale" type="button">
       <input id="invertbtn" value="Invert" type="button">
         <input id="prog" type="text"  value=""/>
     </div>
     
     <canvas id="canvas" width="640" height="480"></canvas>
-    
+    <canvas id="canvas2" width="64" height="80"></canvas>
+    <div id="shows"> </div>
     
     
     
@@ -101,8 +103,11 @@
             },1000);
 		}
         var __i=0;
+        
+        
+        
         function draw(img,i,__i) {
-               console.log(img.src);
+               //console.log(img.src);
               var canvas = document.getElementById('canvas');
               var ctx = canvas.getContext('2d');
               ctx.drawImage(img, 0, 0);
@@ -113,6 +118,47 @@
               ctx.putImageData(imageData, 0, 0);
               ctx.save();
                
+              var part = function(x1,y1,x2,y2) {
+                  //console.log(img.src);
+                  console.log(x1+" "+y1+" "+x2+" "+y2);
+                  var canvas2 = document.getElementById('canvas2');
+                  var ctx2 = canvas2.getContext('2d');
+                  //ctx2.drawImage(img, 0, 0);
+                  //img.style.display = 'none';
+                  var imageData2 = ctx.getImageData(x1,y1,x2, y2);
+                  var data2 = imageData2.data;
+
+                  ctx2.putImageData(imageData2, 0, 0);
+                  ctx2.save();
+                  var count = 0;
+                  for (var i = 0; i < data2.length; i += 4) {
+                     var avg = (data2[i] + data2[i +1] + data2[i +2]) / 3;
+                      if(Math.abs(avg-data2[i])>20||Math.abs(avg-data2[i+1])>20||Math.abs(avg-data2[i+2])>20){
+                          count++;
+                      }
+                      
+                    }
+                  console.log(count);
+                  console.log(data2.length/4);
+                  var status = "No";
+                  if((count/5120)>0.2)
+                      status = "Yes";
+                  else
+                      status = "No";
+                  document.getElementById("shows").innerHTML = status;
+                  
+                  /*
+                        s=y1*canvas.width+x1-1;
+                        s*=4;
+                        for (var i = s; i < (x2-x1)*4; i += 4) {
+
+                          data[i]     = 255 - data[i];     // red
+                          data[i + 1] = 255 - data[i + 1]; // green
+                          data[i + 2] = 255 - data[i + 2];} // blue
+                        }
+                    ctx.putImageData(imageData, 0, 0);*/
+              };
+            
               var invert = function() {
                 for (var i = 0; i < data.length; i += 4) {
                   data[i]     = 255 - data[i];     // red
@@ -132,7 +178,9 @@
                 ctx.putImageData(imageData, 0, 0);
                   
               };
-
+              
+              var partb = document.getElementById('partbtn');
+              partb.addEventListener('click', part(385,293,451,374));
               var invertbtn = document.getElementById('invertbtn');
               invertbtn.addEventListener('click', invert);
               var grayscalebtn = document.getElementById('grayscalebtn');

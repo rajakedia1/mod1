@@ -16,7 +16,7 @@ echo $i = $_GET['i'];
 //if(file_exists("image/webcam".$i-1.".jpg"))
 //    delete("image/webcam".$i-1.".jpg");
 move_uploaded_file($_FILES['webcam']['tmp_name'], 'image/webcam'.$i.'.jpg');
-$j = $i-50;
+$j = $i-5;
 $filename = 'image/webcam'.$j.'.jpg';
 
   
