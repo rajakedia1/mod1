@@ -1,10 +1,12 @@
-
+<?php
+   
+?>
 <!doctype html>
 
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>WebcamJS Test Page - Large Capture</title>
+	<title>PBee | Parking Solution</title>
     <link href="css/front.css" rel="stylesheet">
 	<style type="text/css">
 		body { font-family: Helvetica, sans-serif; }
@@ -16,10 +18,12 @@
 </head>
     
     
-<body >
+<body onload="getLocation();">
+    <script type="text/javascript">
     
+    </script>
     <header>
-        <a href="#"><b style="color:red;">P</b>Bee</a>
+        <a href="#"><b style="color:red;">P</b>Bee (Parking Station)</a>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
@@ -31,27 +35,28 @@
     </header>
     
     <div class="wrapper">
-        <div class="left">
-            raj
+        <div class="left"><br><br>
+            <div id="loc"> </div><br>
+            <h3 style="text-align:center;">Station Location: <i>Penman Auditorium</i></h3>
         </div>
         <div class="right">
-            <canvas id="control" width="900px" height="500px" ></canvas>
+            <canvas id="control" style="margin:0 calc(50% - 450px);" width="900px" height="500px" ></canvas>
         </div>
     </div>
     
    <div style="clear:both;"></div>
      
-	<div id="results">My image</div>
-	<div id="my_camera"></div>
+	<div style="display:none;" id="results">My image</div>
+	<div style="display:none;"  id="my_camera"></div>
 	
 	
-	<form>
-		<input type=button value="Take Large Snapshot" onclick="take_snapshot(1)"><br>
+	<form class="mx">
+		<input type=button value="Start Detection" onclick="take_snapshot(1)"><br>
     </form>
     
     <input id="mydata" type="hidden" name="mydata" value=""/>
    
-    <div> <!--
+    <div style="display:none;"> <!--
         <input id="partbtn" value="Part" type="button"> -->
         <input id="manibtn" value="Mani" type="button">
       <input id="grayscalebtn" value="Grayscale" type="button">
@@ -59,19 +64,22 @@
         <input id="prog" type="text"  value=""/>
     </div>
     
-    <canvas id="canvas" width="640" height="480"></canvas>
-    <canvas id="canvas2" width="64px" height="80px"></canvas>
-    <div id="shows"> </div>
+    <canvas style="display:none;" id="canvas" width="640" height="480"></canvas><br>
+    
+    <div style="display:none;" id="shows"> </div>
     
     
     
     <script type="text/javascript" src="webcam.js"></script>
-
+    <script type="text/javascript" src="location.js"></script>
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtyd0-jWHuEPyxtCsVGJkU5PQSXGrYS6I">
+    </script>
    
 	<script language="JavaScript">
 		Webcam.set({
-			width: 80,
-			height: 40,
+			width: 10,
+			height: 10,
 			dest_width: 640,
 			dest_height: 480,
 			image_format: 'jpeg',
@@ -80,6 +88,7 @@
 		Webcam.attach( '#my_camera' );
 	</script>
 	<script language="JavaScript">
+        
         function take_snapshot(i) {
 			var dr = Webcam.snap( function(data_uri) {
 				document.getElementById('results').innerHTML = 
@@ -101,13 +110,13 @@
                      draw(img,j,0);
                  };    
                   
-            },3500);
+            },1500);
 		}
         var __i=0;
         
         
         
-        function draw(img,i,__i) {
+        function draw(img,tx,__i) {
                //console.log(img.src);
               var canvas = document.getElementById('canvas');
               var ctx = canvas.getContext('2d');
@@ -120,13 +129,13 @@
               ctx.save();
                
               var mani = function(){
-                  var arr=[455,292,521,375,385,293,451,374,314,293,380,375,247,292,309,376,176,293,241,376,110,292,171,374,41,292,104,374,462,119,524,119,390,119,456,119,321,119,386,200,251,118,316,199,183,119,247,199,114,118,178,200,46,118,109,200];
-                  var l =14;
+                  var arr =[15,30,117,175,116,29,219,173,220,30,322,173,325,29,425,173,429,30,528,173,533,29,627,172,21,286,119,420,118,287,217,420,218,287,316,418,319,287,415,418,419,286,513,419,520,286,611,419];
+                  var l =12;
                   var s=[];
                   var j=0;
-                  //console.log("L = "+arr.length);
-                  for(i=0;i<56;i+=4){
-                      status = part(arr[i+0],arr[i+1],arr[i+2],arr[i+3]);
+                 // console.log("L = "+arr.length);
+                  for(i=0;i<48;i+=4){
+                      status = part(arr[i +0],arr[i +1],arr[i +2],arr[i +3],i +3);
                       s[j++]=status;
                   }
                   console.log(s);
@@ -144,8 +153,15 @@
                           var canvas = document.getElementById('control');
                           var ctx = canvas.getContext('2d');
                           ctx.drawImage(img1, 0, 0);
+                         for(i=0;i<6;i++){
+                             if(s[i]=="Yes")
+                                 ctx.drawImage(img, 105+100*i, 55,90,140);
+                         }
+                         for(i=0;i<6;i++){
+                             if(s[i +6]=="Yes")
+                                 ctx.drawImage(img, 105+100*i, 305,90,140);
+                         }
                          
-                         ctx.drawImage(img, 0, 0);
                           //img.style.display = 'none';
                           //var imageData2 = ctx.getImageData(x1,y1,x2, y2);
                           //var data2 = imageData2.data;
@@ -157,14 +173,14 @@
               };
             
             
-              var part = function(x1,y1,x2,y2) {
+              var part = function(x1,y1,x2,y2,r) {
                   //console.log(img.src);
                   //console.log(x1+" "+y1+" "+x2+" "+y2);
-                  var canvas2 = document.getElementById('canvas2');
+                  var canvas2 = document.getElementById('canvas');
                   var ctx2 = canvas2.getContext('2d');
                   //ctx2.drawImage(img, 0, 0);
                   //img.style.display = 'none';
-                  var imageData2 = ctx.getImageData(x1,y1,x2, y2);
+                  var imageData2 = ctx.getImageData(x1,y1,100, 145);
                   var data2 = imageData2.data;
                   //console.log(data);
                   ctx2.putImageData(imageData2, 0, 0);
@@ -197,6 +213,7 @@
                         }
                     ctx.putImageData(imageData, 0, 0);*/
               };
+              
             
               var invert = function() {
                 for (var i = 0; i < data.length; i += 4) {
