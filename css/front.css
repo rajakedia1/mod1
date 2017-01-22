@@ -5,6 +5,7 @@
 header{
     height: 50px;
     background-color: black;
+    margin: 0;
 }
 header a{
     color: white;
@@ -36,19 +37,37 @@ header nav ul li{
     margin: 0;
 }
 .wrapper .left{
-    width: 200px;
+    width: 300px;
     float: left;
     display: block;
     height: 500px;
+    background: #f8eded;
 }
 .wrapper .right{
-    width: calc(100% - 200px);
-    width: calc(100% - 200px);
+    width: calc(100% - 300px);
     float: left;
     display: block;
-    max-width: calc(100% - 200px);
+    max-width: calc(100% - 300px);
 }
 .wrapper .right canvas{
     width: 800;
     height: 460;
+}
+.mx input{
+    
+    height: 50px;
+    width: 250px;
+    margin: 100px calc(50% - 125px) 0;
+    background-color: #1d211e;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 25px;
+    cursor: pointer;
+    
+}
+#loc{
+    font-size: 20px;
+    text-align: center;
 }
